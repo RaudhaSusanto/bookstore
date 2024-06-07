@@ -51,12 +51,41 @@ def build_sql_query(model, params):
 
     return query.all()
 
-@app.route('/search', methods=['GET'])
-def search_books():
-    params = request.args.to_dict()
-    books = build_sql_query(Book, params)
+@app.route('/books', methods=['GET'])
+def get_books():
+    books = Book.query.all()
+    return jsonify([book.serialize() for book in books])
+from flask import jsonify
+
+# Route untuk mengambil semua data buku
+@app.route('/books', methods=['GET'])
+def get_all_books():
+    books = Book.query.all()
     return jsonify([book.serialize() for book in books])
 
+# Route untuk mengambil semua data penulis
+@app.route('/authors', methods=['GET'])
+def get_all_authors():
+    authors = Author.query.all()
+    return jsonify([author.serialize() for author in authors])
+
+# Route untuk mengambil semua data kategori
+@app.route('/categories', methods=['GET'])
+def get_all_categories():
+    categories = Category.query.all()
+    return jsonify([category.serialize() for category in categories])
+
+# Route untuk mengambil semua data penerbit
+@app.route('/publishers', methods=['GET'])
+def get_all_publishers():
+    publishers = Publisher.query.all()
+    return jsonify([publisher.serialize() for publisher in publishers])
+
+# Route untuk mengambil semua data pengguna
+@app.route('/users', methods=['GET'])
+def get_all_users():
+    users = User.query.all()
+    return jsonify([user.serialize() for user in users])
 def perform_transaction(operations):
     try:
         for operation in operations:
